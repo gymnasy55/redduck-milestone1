@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "ilya-k-redduck-blockchain"
+  },
+  "targets": {
+    "ilya-k-redduck-blockchain": {
+      "hosting": {
+        "ilya-k-redduck-blockchain-milestone-1": [
+          "ilya-k-redduck-blockchain-milestone-1"
+        ]
+      }
+    }
+  }
+}
