@@ -89,7 +89,7 @@ contract ERC20 is IERC20, IERC20Metadata {
         address owner,
         address spender,
         uint256 amount
-    ) private {
+    ) internal {
         require(owner != address(0), "owner is zero address");
         require(spender != address(0), "spender is zero address");
 
@@ -102,7 +102,7 @@ contract ERC20 is IERC20, IERC20Metadata {
         address from,
         address to,
         uint256 amount
-    ) private {
+    ) internal {
         require(from != address(0), "transfer from zero address");
         require(to != address(0), "transfer to zero address");
         uint256 balanceFrom = _balances[from];
