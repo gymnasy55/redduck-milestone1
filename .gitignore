@@ -9,3 +9,6 @@ cache
 artifacts
 
 yarn-error.log
+gas-report.txt
+
+.idea
