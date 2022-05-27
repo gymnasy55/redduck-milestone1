@@ -6,12 +6,12 @@ import hre from 'hardhat';
 import { parseUnits } from '../helpers/ethers-helpers';
 import { ERC20, ERC20Mintable__factory } from '../typechain';
 
-interface ERC20SetupTest {
+type ERC20SetupTest = {
   account: SignerWithAddress;
   deployer: SignerWithAddress;
   erc20: ERC20;
   zeroSigner: SignerWithAddress;
-}
+};
 
 describe('ERC20 contract test', () => {
   const expectedName = 'ERC20 Token';
