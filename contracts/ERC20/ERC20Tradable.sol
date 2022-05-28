@@ -95,14 +95,14 @@ contract ERC20Tradable is ITradable, ERC20 {
         uint256 freeTokenAmount = balanceOf(addr) - _token1;
         require(freeAmount > 0 || freeTokenAmount > 0, "nothing to transfer");
 
+        if (freeTokenAmount > 0) {
+            _transfer(addr, recipient, freeTokenAmount);
+        }
+
         if (freeAmount > 0) {
             // solhint-disable-next-line avoid-low-level-calls
             (bool success, ) = recipient.call{value: freeAmount}("");
             require(success, "transfer failed");
-        }
-
-        if (freeTokenAmount > 0) {
-            _transfer(addr, recipient, freeTokenAmount);
         }
 
         return true;
