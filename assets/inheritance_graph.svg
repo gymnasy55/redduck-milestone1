@@ -1,0 +1,85 @@
+<?xml version="1.0" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="374pt" height="260pt" viewBox="0.00 0.00 374.40 260.00">
+<g id="graph0" class="graph" transform="translate(21.055123280309203,239.7488356251525) scale(0.8705505632961241)" data-name="G">
+
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-256 370.4,-256 370.4,4 -4,4" style=""/>
+<!-- IVotes -->
+<g id="node1" class="node" pointer-events="visible" data-name="IVotes">
+
+<ellipse fill="none" stroke="black" cx="36.78" cy="-162" rx="36.57" ry="18" style=""/>
+<text text-anchor="middle" x="36.78" y="-157.8" font-family="Times,serif" font-size="14.00" style="">IVotes</text>
+</g>
+<!-- ITradable -->
+<g id="node2" class="node" pointer-events="visible" data-name="ITradable">
+
+<ellipse fill="none" stroke="black" cx="112.78" cy="-90" rx="48.63" ry="18" style=""/>
+<text text-anchor="middle" x="112.78" y="-85.8" font-family="Times,serif" font-size="14.00" style="">ITradable</text>
+</g>
+<!-- ERC20TradableVotes -->
+<g id="node3" class="node" pointer-events="visible" data-name="ERC20TradableVotes">
+
+<ellipse fill="none" stroke="black" cx="100.78" cy="-234" rx="96.14" ry="18" style=""/>
+<text text-anchor="middle" x="100.78" y="-229.8" font-family="Times,serif" font-size="14.00" style="">ERC20TradableVotes</text>
+</g>
+<!-- ERC20TradableVotes&#45;&gt;IVotes -->
+<g id="edge1" class="edge" data-name="ERC20TradableVotes-&gt;IVotes">
+
+<path fill="none" stroke="black" d="M85.29,-216.05C77.12,-207.12 66.96,-196.01 58.06,-186.28" style=""/>
+<polygon fill="black" stroke="black" points="60.59,-183.85 51.25,-178.83 55.42,-188.57 60.59,-183.85" style=""/>
+</g>
+<!-- ERC20Tradable -->
+<g id="node4" class="node" pointer-events="visible" data-name="ERC20Tradable">
+
+<ellipse fill="none" stroke="black" cx="165.78" cy="-162" rx="73.58" ry="18" style=""/>
+<text text-anchor="middle" x="165.78" y="-157.8" font-family="Times,serif" font-size="14.00" style="">ERC20Tradable</text>
+</g>
+<!-- ERC20TradableVotes&#45;&gt;ERC20Tradable -->
+<g id="edge2" class="edge" data-name="ERC20TradableVotes-&gt;ERC20Tradable">
+
+<path fill="none" stroke="black" d="M116.52,-216.05C124.5,-207.46 134.34,-196.86 143.13,-187.4" style=""/>
+<polygon fill="black" stroke="black" points="145.95,-189.5 150.19,-179.79 140.82,-184.74 145.95,-189.5" style=""/>
+</g>
+<!-- ERC20Tradable&#45;&gt;ITradable -->
+<g id="edge3" class="edge" data-name="ERC20Tradable-&gt;ITradable">
+
+<path fill="none" stroke="black" d="M152.95,-144.05C146.57,-135.63 138.74,-125.28 131.69,-115.97" style=""/>
+<polygon fill="black" stroke="black" points="134.32,-113.65 125.49,-107.79 128.74,-117.87 134.32,-113.65" style=""/>
+</g>
+<!-- ERC20 -->
+<g id="node5" class="node" pointer-events="visible" data-name="ERC20">
+
+<ellipse fill="none" stroke="black" cx="218.78" cy="-90" rx="39.45" ry="18" style=""/>
+<text text-anchor="middle" x="218.78" y="-85.8" font-family="Times,serif" font-size="14.00" style="">ERC20</text>
+</g>
+<!-- ERC20Tradable&#45;&gt;ERC20 -->
+<g id="edge4" class="edge" data-name="ERC20Tradable-&gt;ERC20">
+
+<path fill="none" stroke="black" d="M178.61,-144.05C185.09,-135.5 193.06,-124.97 200.19,-115.56" style=""/>
+<polygon fill="black" stroke="black" points="203.19,-117.39 206.44,-107.31 197.61,-113.17 203.19,-117.39" style=""/>
+</g>
+<!-- IERC20 -->
+<g id="node6" class="node" pointer-events="visible" data-name="IERC20">
+
+<ellipse fill="none" stroke="black" cx="148.78" cy="-18" rx="42.88" ry="18" style=""/>
+<text text-anchor="middle" x="148.78" y="-13.8" font-family="Times,serif" font-size="14.00" style="">IERC20</text>
+</g>
+<!-- ERC20&#45;&gt;IERC20 -->
+<g id="edge5" class="edge" data-name="ERC20-&gt;IERC20">
+
+<path fill="none" stroke="black" d="M202.9,-73.12C193.68,-63.9 181.91,-52.13 171.7,-41.92" style=""/>
+<polygon fill="black" stroke="black" points="174.15,-39.42 164.6,-34.82 169.2,-44.37 174.15,-39.42" style=""/>
+</g>
+<!-- IERC20Metadata -->
+<g id="node7" class="node" pointer-events="visible" data-name="IERC20Metadata">
+
+<ellipse fill="none" stroke="black" cx="287.78" cy="-18" rx="78.73" ry="18" style=""/>
+<text text-anchor="middle" x="287.78" y="-13.8" font-family="Times,serif" font-size="14.00" style="">IERC20Metadata</text>
+</g>
+<!-- ERC20&#45;&gt;IERC20Metadata -->
+<g id="edge6" class="edge" data-name="ERC20-&gt;IERC20Metadata">
+
+<path fill="none" stroke="black" d="M234.44,-73.12C243.18,-64.24 254.26,-53.01 264.05,-43.08" style=""/>
+<polygon fill="black" stroke="black" points="266.7,-45.38 271.22,-35.8 261.71,-40.46 266.7,-45.38" style=""/>
+</g>
+</g>
+</svg>
