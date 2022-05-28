@@ -1,46 +1,99 @@
-# Advanced Sample Hardhat Project
+# Redduck Milestone 1
 
-This project demonstrates an advanced Hardhat use case, integrating other tools commonly used alongside Hardhat in the ecosystem.
+## Sūrya's Description Report
 
-The project comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts. It also comes with a variety of other tools, preconfigured to work with the project code.
+### Files Description Table
 
-Try running some of the following tasks:
+| File Name                                | SHA-1 Hash                               |
+| ---------------------------------------- | ---------------------------------------- |
+| ./contracts/interfaces/IVotes.sol        | c1d09e7d196f18b1e36fe0e8ac2e8c31d4c1ecaf |
+| ./contracts/interfaces/ITradable.sol     | 0c8b2eafdf527158560c95fd1f4f46308e44a1a2 |
+| ./contracts/ERC20/ERC20TradableVotes.sol | 0036e716f172a3dfda1fdedc65b8b8a9c5ba8b23 |
+| ./contracts/ERC20/ERC20Tradable.sol      | 5abfa541af05e8d0062949db1afb1bfe14fa8bbe |
+| ./contracts/ERC20/ERC20.sol              | d086ee7586227db6e12fe88c02429781237d5ec6 |
 
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-npx hardhat help
-REPORT_GAS=true npx hardhat test
-npx hardhat coverage
-npx hardhat run scripts/deploy.ts
-TS_NODE_FILES=true npx ts-node scripts/deploy.ts
-npx eslint '**/*.{js,ts}'
-npx eslint '**/*.{js,ts}' --fix
-npx prettier '**/*.{json,sol,md}' --check
-npx prettier '**/*.{json,sol,md}' --write
-npx solhint 'contracts/**/*.sol'
-npx solhint 'contracts/**/*.sol' --fix
-```
+### Contracts Description Table
 
-# Etherscan verification
+|        Contract        |       Type        |         Bases          |                |               |
+| :--------------------: | :---------------: | :--------------------: | :------------: | :-----------: |
+|           └            | **Function Name** |     **Visibility**     | **Mutability** | **Modifiers** |
+|                        |                   |                        |                |               |
+|       **IVotes**       |     Interface     |                        |                |               |
+|           └            |       price       |      External ❗️      |                |     NO❗️     |
+|           └            |  suggestedPrice   |      External ❗️      |                |     NO❗️     |
+|           └            | capitalShareRate  |      External ❗️      |                |     NO❗️     |
+|           └            |    acceptPower    |      External ❗️      |                |     NO❗️     |
+|           └            |    rejectPower    |      External ❗️      |                |     NO❗️     |
+|           └            | votingStartedTime |      External ❗️      |                |     NO❗️     |
+|           └            |  votingDuration   |      External ❗️      |                |     NO❗️     |
+|           └            | lastVotingNumber  |      External ❗️      |                |     NO❗️     |
+|           └            |      isWhale      |      External ❗️      |                |     NO❗️     |
+|           └            |    startVoting    |      External ❗️      |       🛑       |     NO❗️     |
+|           └            |       vote        |      External ❗️      |       🛑       |     NO❗️     |
+|           └            |     endVoting     |      External ❗️      |       🛑       |     NO❗️     |
+|                        |                   |                        |                |               |
+|     **ITradable**      |     Interface     |                        |                |               |
+|           └            |       price       |      External ❗️      |                |     NO❗️     |
+|           └            |     liquidity     |      External ❗️      |                |     NO❗️     |
+|           └            |   addLiquidity    |      External ❗️      |       💵       |     NO❗️     |
+|           └            |        buy        |      External ❗️      |       💵       |     NO❗️     |
+|           └            |       sell        |      External ❗️      |       🛑       |     NO❗️     |
+|           └            |      release      |      External ❗️      |       🛑       |     NO❗️     |
+|                        |                   |                        |                |               |
+| **ERC20TradableVotes** |  Implementation   | IVotes, ERC20Tradable  |                |               |
+|           └            |   <Constructor>   |       Public ❗️       |       🛑       | ERC20Tradable |
+|           └            |       price       |       Public ❗️       |                |     NO❗️     |
+|           └            |  suggestedPrice   |       Public ❗️       |                |     NO❗️     |
+|           └            | capitalShareRate  |       Public ❗️       |                |     NO❗️     |
+|           └            |    acceptPower    |       Public ❗️       |                |     NO❗️     |
+|           └            |    rejectPower    |       Public ❗️       |                |     NO❗️     |
+|           └            | votingStartedTime |       Public ❗️       |                |     NO❗️     |
+|           └            |  votingDuration   |       Public ❗️       |                |     NO❗️     |
+|           └            | lastVotingNumber  |       Public ❗️       |                |     NO❗️     |
+|           └            |      isWhale      |       Public ❗️       |                |     NO❗️     |
+|           └            |    startVoting    |      External ❗️      |       🛑       |   onlyWhale   |
+|           └            |       vote        |      External ❗️      |       🛑       |   onlyWhale   |
+|           └            |     endVoting     |      External ❗️      |       🛑       |     NO❗️     |
+|           └            |      \_time       |      Internal 🔒       |                |               |
+|                        |                   |                        |                |               |
+|   **ERC20Tradable**    |  Implementation   |    ITradable, ERC20    |                |               |
+|           └            |   <Constructor>   |       Public ❗️       |       🛑       |     ERC20     |
+|           └            |  <Receive Ether>  |      External ❗️      |       💵       |     NO❗️     |
+|           └            |       price       |       Public ❗️       |                |     NO❗️     |
+|           └            |     liquidity     |       Public ❗️       |                |     NO❗️     |
+|           └            |   addLiquidity    |      External ❗️      |       💵       |     NO❗️     |
+|           └            |        buy        |      External ❗️      |       💵       |     NO❗️     |
+|           └            |       sell        |      External ❗️      |       🛑       |     NO❗️     |
+|           └            |      release      |      External ❗️      |       🛑       |     NO❗️     |
+|           └            | \_changeLiquidity |      Internal 🔒       |       🛑       |               |
+|           └            |       \_add       |       Private 🔐       |                |               |
+|           └            |       \_sub       |       Private 🔐       |                |               |
+|                        |                   |                        |                |               |
+|       **ERC20**        |  Implementation   | IERC20, IERC20Metadata |                |               |
+|           └            |   <Constructor>   |       Public ❗️       |       🛑       |     NO❗️     |
+|           └            |       name        |       Public ❗️       |                |     NO❗️     |
+|           └            |      symbol       |       Public ❗️       |                |     NO❗️     |
+|           └            |     decimals      |       Public ❗️       |                |     NO❗️     |
+|           └            |    totalSupply    |       Public ❗️       |                |     NO❗️     |
+|           └            |     balanceOf     |       Public ❗️       |                |     NO❗️     |
+|           └            |     transfer      |       Public ❗️       |       🛑       |     NO❗️     |
+|           └            |     allowance     |       Public ❗️       |                |     NO❗️     |
+|           └            |      approve      |       Public ❗️       |       🛑       |     NO❗️     |
+|           └            |   transferFrom    |       Public ❗️       |       🛑       |     NO❗️     |
+|           └            |     \_approve     |      Internal 🔒       |       🛑       |               |
+|           └            |    \_transfer     |      Internal 🔒       |       🛑       |               |
 
-To try out Etherscan verification, you first need to deploy a contract to an Ethereum network that's supported by Etherscan, such as Ropsten.
+### Legend
 
-In this project, copy the .env.example file to a file named .env, and then edit it to fill in the details. Enter your Etherscan API key, your Ropsten node URL (eg from Alchemy), and the private key of the account which will send the deployment transaction. With a valid .env file in place, first deploy your contract:
+| Symbol | Meaning                   |
+| :----: | ------------------------- |
+|   🛑   | Function can modify state |
+|   💵   | Function is payable       |
 
-```shell
-hardhat run --network ropsten scripts/deploy.ts
-```
+## Inheritance graph
 
-Then, copy the deployment address and paste it in to replace `DEPLOYED_CONTRACT_ADDRESS` in this command:
+![Inheritance graph](assets/inheritance_graph.svg)
 
-```shell
-npx hardhat verify --network ropsten DEPLOYED_CONTRACT_ADDRESS "Hello, Hardhat!"
-```
+## Call graph
 
-# Performance optimizations
-
-For faster runs of your tests and scripts, consider skipping ts-node's type checking by setting the environment variable `TS_NODE_TRANSPILE_ONLY` to `1` in hardhat's environment. For more details see [the documentation](https://hardhat.org/guides/typescript.html#performance-optimizations).
+![Call graph](assets/call_graph.svg)
