@@ -4,6 +4,11 @@ pragma solidity ^0.8.9;
 import "./ERC20Tradable.sol";
 import "../interfaces/IVotes.sol";
 
+/**
+ * @title ERC20TradableVotes
+ * @notice ERC20Tradable contract that allows to vote for token price.
+ * @author Ilya Kubariev <ilya.kubariev@redduck.io>
+ */
 contract ERC20TradableVotes is IVotes, ERC20Tradable {
     uint8 internal immutable _capitalShareRate;
 
@@ -25,6 +30,9 @@ contract ERC20TradableVotes is IVotes, ERC20Tradable {
         _capitalShareRate = capitalShareRate_;
     }
 
+    /**
+     * @inheritdoc IVotes
+     */
     function price()
         public
         view
@@ -34,38 +42,65 @@ contract ERC20TradableVotes is IVotes, ERC20Tradable {
         return _price * divider;
     }
 
+    /**
+     * @inheritdoc IVotes
+     */
     function suggestedPrice() public view returns (uint256) {
         return _suggestedPrice * divider;
     }
 
+    /**
+     * @inheritdoc IVotes
+     */
     function capitalShareRate() public view returns (uint8) {
         return _capitalShareRate;
     }
 
+    /**
+     * @inheritdoc IVotes
+     */
     function acceptPower() public view returns (uint256) {
         return _acceptPower;
     }
 
+    /**
+     * @inheritdoc IVotes
+     */
     function rejectPower() public view returns (uint256) {
         return _rejectPower;
     }
 
+    /**
+     * @inheritdoc IVotes
+     */
     function votingStartedTime() public view returns (uint64) {
         return _votingStartedTime;
     }
 
+    /**
+     * @inheritdoc IVotes
+     */
     function votingDuration() public view returns (uint64) {
         return _duration;
     }
 
+    /**
+     * @inheritdoc IVotes
+     */
     function lastVotingNumber() public view returns (uint256) {
         return _votingNumber;
     }
 
+    /**
+     * @inheritdoc IVotes
+     */
     function isWhale(address whale) public view returns (bool) {
         return balanceOf(whale) >= _totalSupply / (100 / _capitalShareRate);
     }
 
+    /**
+     * @inheritdoc IVotes
+     */
     function startVoting(uint256 suggestedPrice_, uint64 duration)
         external
         onlyWhale(msg.sender)
@@ -89,6 +124,9 @@ contract ERC20TradableVotes is IVotes, ERC20Tradable {
         return true;
     }
 
+    /**
+     * @inheritdoc IVotes
+     */
     function vote(bool decision) external onlyWhale(msg.sender) returns (bool) {
         uint64 time = _time();
         require(
@@ -113,6 +151,9 @@ contract ERC20TradableVotes is IVotes, ERC20Tradable {
         return true;
     }
 
+    /**
+     * @inheritdoc IVotes
+     */
     function endVoting() external returns (bool) {
         uint64 time = _time();
         require(
@@ -142,11 +183,19 @@ contract ERC20TradableVotes is IVotes, ERC20Tradable {
         return true;
     }
 
+    /**
+     * @dev one place to get time of block.
+     * @return current timestamp of block.
+     */
     function _time() internal view returns (uint64) {
         // solhint-disable-next-line not-rely-on-time
         return uint64(block.timestamp);
     }
 
+    /**
+     * @notice allows to call function only for `whale`
+     * @param whale - address to check
+     */
     modifier onlyWhale(address whale) {
         require(isWhale(whale), "not a whale");
         _;
