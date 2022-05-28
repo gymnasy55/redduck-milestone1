@@ -4,7 +4,15 @@ pragma solidity ^0.8.9;
 import "./ERC20.sol";
 import "../interfaces/ITradable.sol";
 
+/**
+ * @title ERC20Tradable
+ * @notice ERC20 contract that allows to trade tokens.
+ * @author Ilya Kubariev <ilya.kubariev@redduck.io>
+ */
 contract ERC20Tradable is ITradable, ERC20 {
+    /**
+     * @return divider - returns divider for price.
+     */
     uint256 public immutable divider;
 
     uint256 internal _token0;
@@ -24,10 +32,16 @@ contract ERC20Tradable is ITradable, ERC20 {
     // solhint-disable-next-line no-empty-blocks
     receive() external payable {}
 
+    /**
+     * @inheritdoc ITradable
+     */
     function price() public view virtual returns (uint256) {
         return _price * divider;
     }
 
+    /**
+     * @inheritdoc ITradable
+     */
     function liquidity()
         public
         view
@@ -36,6 +50,9 @@ contract ERC20Tradable is ITradable, ERC20 {
         (amount, tokenAmount) = (_token0, _token1);
     }
 
+    /**
+     * @inheritdoc ITradable
+     */
     function addLiquidity(uint256 tokenAmount) external payable returns (bool) {
         uint256 amount = msg.value;
         require(amount > 0, "amount must be positive");
@@ -48,6 +65,9 @@ contract ERC20Tradable is ITradable, ERC20 {
         return true;
     }
 
+    /**
+     * @inheritdoc ITradable
+     */
     function buy() external payable returns (bool) {
         uint256 amount = msg.value;
         require(amount > 0, "amount must be positive");
@@ -68,6 +88,9 @@ contract ERC20Tradable is ITradable, ERC20 {
         return true;
     }
 
+    /**
+     * @inheritdoc ITradable
+     */
     function sell(uint256 tokenAmount) external returns (bool) {
         require(tokenAmount > 0, "tokenAmount must be positive");
         uint256 amount = (tokenAmount * price()) / divider;
@@ -88,6 +111,9 @@ contract ERC20Tradable is ITradable, ERC20 {
         return true;
     }
 
+    /**
+     * @inheritdoc ITradable
+     */
     function release(address recipient) external returns (bool) {
         require(recipient != address(0), "recipient is zero address");
         address addr = address(this);
@@ -108,6 +134,13 @@ contract ERC20Tradable is ITradable, ERC20 {
         return true;
     }
 
+    /**
+     * @dev internal func to change liquidity in different ways.
+     * @param amount - ether amount to change in liquidity.
+     * @param tokenAmount - token amount to change in liquidity.
+     * @param op0 - function to apply to ether liquidity.
+     * @param op1 - function to apply to token liquidity.
+     */
     function _changeLiquidity(
         uint256 amount,
         uint256 tokenAmount,
