@@ -24,7 +24,7 @@ contract ERC20Tradable is ITradable, ERC20 {
     // solhint-disable-next-line no-empty-blocks
     receive() external payable {}
 
-    function price() public view returns (uint256) {
+    function price() public view virtual returns (uint256) {
         return _price * divider;
     }
 
