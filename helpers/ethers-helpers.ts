@@ -31,3 +31,11 @@ export const getBalanceAndTokenBalance = (
 
 export const calcGasValue = (receipt: ContractReceipt): BigNumber =>
   receipt.cumulativeGasUsed.mul(receipt.effectiveGasPrice);
+
+export const increaseTime = async (
+  provider: providers.JsonRpcProvider,
+  seconds: number,
+): Promise<void> =>
+  provider
+    .send('evm_increaseTime', [seconds])
+    .then(() => provider.send('evm_mine', []));

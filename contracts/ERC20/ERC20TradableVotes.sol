@@ -7,9 +7,9 @@ import "../interfaces/IVotes.sol";
 contract ERC20TradableVotes is IVotes, ERC20Tradable {
     uint8 internal immutable _capitalShareRate;
 
-    uint256 internal _votingStartedTime;
+    uint64 internal _duration;
+    uint64 internal _votingStartedTime;
     uint256 internal _suggestedPrice;
-    uint256 internal _duration;
     uint256 internal _acceptPower;
     uint256 internal _rejectPower;
     uint256 internal _votingNumber;
@@ -38,6 +38,10 @@ contract ERC20TradableVotes is IVotes, ERC20Tradable {
         return _suggestedPrice * divider;
     }
 
+    function capitalShareRate() public view returns (uint8) {
+        return _capitalShareRate;
+    }
+
     function acceptPower() public view returns (uint256) {
         return _acceptPower;
     }
@@ -46,8 +50,20 @@ contract ERC20TradableVotes is IVotes, ERC20Tradable {
         return _rejectPower;
     }
 
+    function votingStartedTime() public view returns (uint64) {
+        return _votingStartedTime;
+    }
+
+    function votingDuration() public view returns (uint64) {
+        return _duration;
+    }
+
+    function lastVotingNumber() public view returns (uint256) {
+        return _votingNumber;
+    }
+
     function isWhale(address whale) public view returns (bool) {
-        return balanceOf(whale) >= _totalSupply * (_capitalShareRate / 100);
+        return balanceOf(whale) >= _totalSupply / (100 / _capitalShareRate);
     }
 
     function startVoting(uint256 suggestedPrice_, uint64 duration)
@@ -62,25 +78,24 @@ contract ERC20TradableVotes is IVotes, ERC20Tradable {
         require(suggestedPrice_ > 0, "suggestedPrice must be positive");
         require(duration > 0, "duration must be positive");
 
-        // solhint-disable-next-line not-rely-on-time
         (_suggestedPrice, _duration, _votingStartedTime) = (
             suggestedPrice_,
             duration,
-            block.timestamp
+            _time()
         );
         _votingNumber++;
 
-        emit VotingStart(msg.sender, suggestedPrice_, duration);
+        emit VotingStart(msg.sender, suggestedPrice_, duration, _votingNumber);
         return true;
     }
 
     function vote(bool decision) external onlyWhale(msg.sender) returns (bool) {
-        // solhint-disable-next-line not-rely-on-time
-        uint64 time = uint64(block.timestamp);
+        uint64 time = _time();
         require(
-            time > _votingStartedTime && time <= _votingStartedTime + _duration,
-            "voting neither start nor end"
+            _votingStartedTime > 0 && _duration > 0,
+            "voting has not been started"
         );
+        require(time <= _votingStartedTime + _duration, "voting ended");
         address sender = msg.sender;
         require(!_votes[_votingNumber][sender], "already voted");
 
@@ -99,8 +114,7 @@ contract ERC20TradableVotes is IVotes, ERC20Tradable {
     }
 
     function endVoting() external returns (bool) {
-        // solhint-disable-next-line not-rely-on-time
-        uint64 time = uint64(block.timestamp);
+        uint64 time = _time();
         require(
             _votingStartedTime > 0 && _duration > 0,
             "voting has not been started"
@@ -115,7 +129,9 @@ contract ERC20TradableVotes is IVotes, ERC20Tradable {
             _rejectPower
         );
 
-        _price = _suggestedPrice;
+        if (_acceptPower > _rejectPower) {
+            _price = _suggestedPrice;
+        }
 
         delete _suggestedPrice;
         delete _duration;
@@ -126,8 +142,13 @@ contract ERC20TradableVotes is IVotes, ERC20Tradable {
         return true;
     }
 
+    function _time() internal view returns (uint64) {
+        // solhint-disable-next-line not-rely-on-time
+        return uint64(block.timestamp);
+    }
+
     modifier onlyWhale(address whale) {
-        require(isWhale(whale), "not enough balance");
+        require(isWhale(whale), "not a whale");
         _;
     }
 }
