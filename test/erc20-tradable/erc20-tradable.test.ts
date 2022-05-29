@@ -9,9 +9,9 @@ import {
   TradableEventArgs,
 } from './types';
 
+import { getBalanceAndTokenBalance } from '../../helpers/contract-helpers';
 import {
   calcGasValue,
-  getBalanceAndTokenBalance,
   parseUnits,
   setBalance,
 } from '../../helpers/ethers-helpers';
