@@ -3,6 +3,7 @@ coverage
 coverage.json
 typechain
 gasReporterOutput.json
+.env
 
 #Hardhat files
 cache
